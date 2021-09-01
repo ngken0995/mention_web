@@ -1,18 +1,19 @@
-import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import React, { useState, useEffect, Component } from 'react'
+import { Redirect, useHistory } from 'react-router-dom'
 import isAuthenticated from '../lib/isAuthenticated'
 
-export default class Login extends Component {
-  
-  constructor(props) {
-    super(props)
+function Login() {
+  const [loggedin, setLoggedin] = useState(isAuthenticated())
+  let history = useHistory();
+  useEffect(() => {
+    if(loggedin){
+    history.push({
+      pathname: '/'
+  });}
+  },[loggedin])
 
-    this.state = {
-      loggedin: isAuthenticated()
-    }
-  }
 
-  submit(e) {
+  const submit = (e) => {
     e.preventDefault()
     e.stopPropagation()
     
@@ -30,7 +31,6 @@ export default class Login extends Component {
     // param.append('remember', formData.get('remember'))
 
     // You must need to valide data but I skip in here
-    
     // Send request to the server
     fetch('http://localhost:5000/api/login', {
       method: 'POST',
@@ -39,27 +39,17 @@ export default class Login extends Component {
       return res.json()
     }).then(data => {
       localStorage.setItem('token', data.token)
-      this.setState({loggedin: true})
+      setLoggedin(true)
     }).catch( (err) => {
       console.error(err)
     })
-  }
+}
 
-  render() {
-    if ( this.state.loggedin ) {
-      return (
-        <Redirect
-          to={{
-            pathname: '/',
-            state: { from: this.props.location }
-          }}
-        />
-      )
-    } else {
-      return (
+
+  return (
         <div>
           <h1>Login</h1>
-          <form onSubmit={this.submit.bind(this)}>
+          <form onSubmit={submit}>
             <div>
               <label>Username: </label>
               <input type="text" name="username" pattern=".{2,16}" required />
@@ -73,7 +63,7 @@ export default class Login extends Component {
             </div>
           </form>
         </div>
-      )
-    }
-  }
+  )
 }
+
+export default Login
