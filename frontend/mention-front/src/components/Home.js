@@ -1,12 +1,12 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react';
 
 function Home() {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState('')
 
   useEffect(() => {
     async function fetchData() {
       // Call fetch as usual
-      const res = await     fetch('http://localhost:5000/api/user', {
+      const res = await fetch('http://localhost:5000/api/user', {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }});
@@ -15,7 +15,6 @@ function Home() {
       const json = await res.json();
 
       // Save the posts into state
-      // (look at the Network tab to see why the path is like this)
       setUser(json.username);
     }
 
@@ -40,7 +39,7 @@ function Home() {
   return (
     <div>
       <h1>Home</h1>
-      <p>Welcome to Home.{user}</p>
+      <p>Welcome to Home {user}</p>
     </div>
   )
 }
