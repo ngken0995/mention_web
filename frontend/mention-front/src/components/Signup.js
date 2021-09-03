@@ -11,7 +11,7 @@ function Signup() {
   useEffect(() => {
     if(loggedin){
     history.push({
-      pathname: '/login'
+      pathname: '/'
   });}
   },[loggedin])
 
@@ -31,7 +31,7 @@ function Signup() {
     // You must need to valide data but I skip in here
 
     // Send request to the server
-    fetch('/api/signup', {
+    fetch('http://localhost:5000/api/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({username,
@@ -52,11 +52,13 @@ function Signup() {
     <form onSubmit={submit}>
       <div>
         <label>Username: </label>
-        <input type="text" name="username" pattern=".{2,16}" required />
+        <input type="text" name="username" pattern=".{2,16}" required 
+        value={username} onChange = {e => setUsername(e.target.value)} />
       </div>
       <div>
         <label>Password: </label>
-        <input type="password" name="password" pattern=".{6,20}" required />
+        <input type="password" name="password" pattern=".{6,20}" required
+        value={password} onChange = {e => setPassword(e.target.value)}/>
       </div>
       <div>
         <input type="submit" value="Sign up" />
