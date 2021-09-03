@@ -1,10 +1,10 @@
-const passport = require('passport'),
-			passportJWT = require("passport-jwt"),
-			Strategy = require('passport-local').Strategy,
-			JWTStrategy = passportJWT.Strategy,
-			ExtractJWT = passportJWT.ExtractJwt
-			User = require('../db/User')
-
+const passport = require('passport')
+const passportJWT = require("passport-jwt")
+const Strategy = require('passport-local').Strategy
+const JWTStrategy = passportJWT.Strategy
+const ExtractJWT = passportJWT.ExtractJwt
+const User = require('../db/User')
+const bcrypt = require('bcrypt')
 // Local Strategy
 passport.use(new Strategy( (username, password, done) => {
 	User.findOne({username: username}, (err, user) => {
@@ -18,13 +18,14 @@ passport.use(new Strategy( (username, password, done) => {
 			})
 		}
 
-		user.login(password).then(() => {
-			 return done(null, user)
-		}).catch((err) => {
-			return done(err, false, {
-				message: 'Password not matched.'
-			})
-		})
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+			if (err) throw err;
+			if (isMatch) {
+			  return done(null, user);
+			} else {
+			  return done(null, false, { message: 'Password incorrect' });
+			}
+		  });
 	})
 }))
 
