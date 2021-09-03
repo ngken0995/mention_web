@@ -5,7 +5,6 @@ const JWTStrategy = passportJWT.Strategy
 const ExtractJWT = passportJWT.ExtractJwt
 const User = require('../db/User')
 const bcrypt = require('bcrypt')
-
 // Local Strategy
 passport.use(new Strategy( (username, password, done) => {
 	User.findOne({username: username}, (err, user) => {
@@ -19,7 +18,7 @@ passport.use(new Strategy( (username, password, done) => {
 			})
 		}
 
-		bcrypt.compare(password, user.password, (err, isMatch) => {
+        bcrypt.compare(password, user.password, (err, isMatch) => {
 			if (err) throw err;
 			if (isMatch) {
 			  return done(null, user);
