@@ -43,7 +43,6 @@ router.get('/user', passport.authenticate('jwt', {
 			username: 'nobody'
 		})
 	}
-
 	res.json({
 		username: req.user.username
 	})

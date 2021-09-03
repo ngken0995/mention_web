@@ -4,6 +4,8 @@ import isAuthenticated from '../lib/isAuthenticated'
 
 function Login() {
   const [loggedin, setLoggedin] = useState(isAuthenticated())
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   let history = useHistory();
   useEffect(() => {
     if(loggedin){
@@ -16,10 +18,6 @@ function Login() {
   const submit = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    
-    let form = e.target
-    let formData = new FormData(form)
-    let params = new URLSearchParams(formData)
 
     // Some browsers don’t support
     // "new URLSearchParams(formData)" syntax
@@ -34,7 +32,9 @@ function Login() {
     // Send request to the server
     fetch('http://localhost:5000/api/login', {
       method: 'POST',
-      body: params
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({username,
+            password})
     }).then( (res) => {
       return res.json()
     }).then(data => {
@@ -50,14 +50,16 @@ function Login() {
         <div>
           <h1>Login</h1>
           <form onSubmit={submit}>
-            <div>
-              <label>Username: </label>
-              <input type="text" name="username" pattern=".{2,16}" required />
-            </div>
-            <div>
-              <label>Password: </label>
-              <input type="password" name="password" pattern=".{6,20}" required />
-            </div>
+          <div>
+            <label>Username: </label>
+            <input type="text" name="username" pattern=".{2,16}" required 
+            value={username} onChange = {e => setUsername(e.target.value)} />
+          </div>
+          <div>
+            <label>Password: </label>
+            <input type="password" name="password" pattern=".{6,20}" required
+            value={password} onChange = {e => setPassword(e.target.value)}/>
+          </div>
             <div>
               <input type="submit" value="Log in" />
             </div>
