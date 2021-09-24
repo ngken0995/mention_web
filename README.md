@@ -14,6 +14,7 @@ Go to "mention-front" folder from Frontend folder and run `npm install`
 ## backend
 
 Go to the backend folder and run `npm install`
+<br />
 Next create a .env file.
 
 
