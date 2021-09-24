@@ -6,6 +6,14 @@
 - React
 - Node
 
-## Frontend
+# Setup
+## Frontend/mention-front
 
-Go to the 
+Go to "mention-front" folder from Frontend folder and run `npm install`
+
+## backend
+
+Go to the backend folder and run `npm install`
+Next create a .env file.
+
+
