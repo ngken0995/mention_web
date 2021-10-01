@@ -15,7 +15,7 @@ const sendEmail = function() {
             }
             axios.post('news/', params)
             .then(response => {
-                data = response.data.posts
+                data = response.data
             })
             .catch((error) => {
                 console.log(error);
