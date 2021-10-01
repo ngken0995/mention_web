@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 
 function Home() {
   const [user, setUser] = useState('')
@@ -19,10 +19,12 @@ function Home() {
 
       // Save the posts into state
       setUser(json.username);
+      setEmail(json.email);
+      setKeyword(json.keyword);
     }
 
     fetchData();
-  });
+  },[]);
   /*
   useEffect(() => {
     fetch('http://localhost:5000/api/user', {
@@ -42,19 +44,19 @@ function Home() {
     e.preventDefault()
     e.stopPropagation()
 
-    // Some browsers don’t support
-    // "new URLSearchParams(formData)" syntax
-    // In which case, please do as follows
-    //
-    // let param = new URLSearchParams()
-    // param.append('username', formData.get('username'))
-    // param.append('password', formData.get('password'))
-    // param.append('remember', formData.get('remember'))
+      fetch('http://localhost:5000/api/updateUser', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({keyword,
+              user,
+              email})
+      }).then( (res) => {
+        return res.json()
+      }).catch( (err) => {
+        console.error(err)
+      })
+    }
 
-    // You must need to valide data but I skip in here
-    // Send request to the server
-
-  }
 
 
   return (
@@ -68,13 +70,14 @@ function Home() {
             value={keyword} onChange = {e => setKeyword(e.target.value)} />
           </div>
           <div>
-            <label>Password: </label>
+            <label>email: </label>
             <input type="email" name="password" pattern=".{6,20}" required
             value={email} onChange = {e => setEmail(e.target.value)}/>
           </div>
-            <div>
-              <input type="submit" value="save" />
-            </div>
+          <input type="hidden" id="user" name="user" value={user}/>
+          <div>
+            <input type="submit" value="save" />
+          </div>
       </form>
     </div>
   )

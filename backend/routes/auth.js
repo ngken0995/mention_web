@@ -9,7 +9,9 @@ const express = require('express'),
 router.post('/signup', (req, res) => {
 	var user = new User({
 		username: req.body.username,
-		password: req.body.password
+		password: req.body.password,
+		email: req.body.email,
+		keyword: ""
 	})
 
 	user.save().then(() => {
@@ -18,6 +20,21 @@ router.post('/signup', (req, res) => {
 		const token = jwt.sign({id: user.id}, 'jwt_secret')
 		res.json({token: token})
 
+	}).catch((err) => {
+		res.status().json({})
+	})
+})
+
+router.post('/updateUser', (req, res) => {
+	var filter = {username: req.body.user}
+	update = {
+		keyword: req.body.keyword,
+		email: req.body.email
+	}
+	
+	User.findOneAndUpdate(filter, update)
+	.then(() => {
+		
 	}).catch((err) => {
 		res.status().json({})
 	})
@@ -43,8 +60,11 @@ router.get('/user', passport.authenticate('jwt', {
 			username: 'nobody'
 		})
 	}
+	
 	res.json({
-		username: req.user.username
+		username: req.user.username,
+		email: req.user.email,
+		keyword: req.user.keyword
 	})
 })
 

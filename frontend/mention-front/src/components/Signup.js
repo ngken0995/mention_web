@@ -6,6 +6,7 @@ function Signup() {
   const [loggedin, setLoggedin] = useState(isAuthenticated());
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -35,7 +36,8 @@ function Signup() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({username,
-            password})
+            password,
+            email})
     }).then( (res) => {
       return res.json()
     }).then(data => {
@@ -59,6 +61,11 @@ function Signup() {
         <label>Password: </label>
         <input type="password" name="password" pattern=".{6,20}" required
         value={password} onChange = {e => setPassword(e.target.value)}/>
+      </div>
+      <div>
+        <label>Email: </label>
+        <input type="email" name="email" pattern=".{6,20}" required
+        value={email} onChange = {e => setEmail(e.target.value)}/>
       </div>
       <div>
         <input type="submit" value="Sign up" />
