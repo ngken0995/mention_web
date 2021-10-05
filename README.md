@@ -11,11 +11,11 @@ A new project about notifying users with keywords through email. A news search e
 - Node
 
 # Setup
-## Frontend/mention-front
+## Frontend\mention-front
 
 Go to "mention-front" folder from Frontend folder and run `npm install`
 <br />
-run `npm start`
+run `npm start` to start frontend.
 <br />
 frontend url is http://localhost:3000
 
@@ -23,5 +23,18 @@ frontend url is http://localhost:3000
 
 Go to the backend folder and run `npm install`
 <br />
-Next create a .env file.
+Next create a .env file and copy and paste the variable below. 
+```
+PORT=5000
+DB_STRING=
+WEBHOSE_TOKEN=
+SENDGRID_API_KEY=
+```
+`DB_STRING` is creating a mongodb database and storing the mongodb connection.
+`WEBHOSE_TOKEN` is creating an account with webhose API(https://webhose.io/) and storing the token.
+`SENDGRID_API_KEY` is creating an account with Twilio sendgrid(https://www.twilio.com/sendgrid/email-api) and storing the token. Also register and email address with twilio.
+
+<br />
+run `node server` to start backend.
+
 
