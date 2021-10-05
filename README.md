@@ -34,7 +34,6 @@ SENDGRID_API_KEY=
 `WEBHOSE_TOKEN` is creating an account with webhose API(https://webhose.io/) and storing the token.
 `SENDGRID_API_KEY` is creating an account with Twilio sendgrid(https://www.twilio.com/sendgrid/email-api) and storing the token. Also register and email address with twilio.
 
-<br />
 run `node server` to start backend.
 
 
